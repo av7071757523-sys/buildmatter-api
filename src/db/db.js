@@ -1,15 +1,20 @@
 const { Pool } = require("pg");
 
+console.log("DATABASE_URL =", process.env.DATABASE_URL);
+
 const pool = new Pool({
-  user: "postgres",
-  host: "Railway DB",   // 🔥 FIXED (important)
-  database: "buildmatter",
-  password: "1135561",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 pool.connect()
-  .then(() => console.log("✅ PostgreSQL Connected Successfully"))
-  .catch(err => console.error("❌ DB Error:", err.message));
+  .then(() => {
+    console.log("✅ PostgreSQL Connected (Railway)");
+  })
+  .catch((err) => {
+    console.error("❌ DB Error:", err.message);
+  });
 
 module.exports = pool;
