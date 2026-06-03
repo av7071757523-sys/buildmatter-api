@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const { createQuote, getQuotes, getQuoteById, updateQuoteStatus, deleteQuote } = require('../controllers/quoteController');
+const authMiddleware = require('../middleware/authMiddleware');
+router.post('/add', authMiddleware, createQuote);
+router.get('/', authMiddleware, getQuotes);
+router.get('/:id', authMiddleware, getQuoteById);
+router.put('/:id/status', authMiddleware, updateQuoteStatus);
+router.delete('/:id', authMiddleware, deleteQuote);
+module.exports = router;

@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug api.test.js",
+            "program": "${workspaceFolder}/src/tests/api.test.js",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}

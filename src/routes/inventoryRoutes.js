@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const { upsertInventory, getInventory, getInventoryByProduct, getLowStock, addStock, deductStock, deleteInventory } = require('../controllers/inventoryController');
+const authMiddleware = require('../middleware/authMiddleware');
+router.post('/update', authMiddleware, upsertInventory);
+router.get('/', authMiddleware, getInventory);
+router.get('/low-stock', authMiddleware, getLowStock);
+router.get('/product/:product_id', authMiddleware, getInventoryByProduct);
+router.put('/product/:product_id/add', authMiddleware, addStock);
+router.put('/product/:product_id/deduct', authMiddleware, deductStock);
+router.delete('/product/:product_id', authMiddleware, deleteInventory);
+module.exports = router;
