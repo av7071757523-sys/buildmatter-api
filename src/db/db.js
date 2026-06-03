@@ -1,30 +1,15 @@
 const { Pool } = require("pg");
 
-// ==============================
-// DATABASE CONNECTION (RAILWAY + LOCAL SAFE)
-// ==============================
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-
-  // REQUIRED for Railway / cloud PostgreSQL
-  ssl: process.env.NODE_ENV === "production"
-    ? { rejectUnauthorized: false }
-    : false,
+  user: "postgres",
+  host: "127.0.0.1",   // 🔥 FIXED (important)
+  database: "buildmatter",
+  password: "1135561",
+  port: 5432,
 });
 
-// ==============================
-// TEST CONNECTION (DEBUG SAFE)
-// ==============================
 pool.connect()
-  .then(() => {
-    console.log("✅ PostgreSQL Connected Successfully");
-  })
-  .catch((err) => {
-    console.error("❌ Database Connection Error:");
-    console.error(err.message);
-  });
+  .then(() => console.log("✅ PostgreSQL Connected Successfully"))
+  .catch(err => console.error("❌ DB Error:", err.message));
 
-// ==============================
-// EXPORT POOL
-// ==============================
 module.exports = pool;
