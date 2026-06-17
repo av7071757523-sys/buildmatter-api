@@ -1,14 +1,27 @@
 require("dotenv").config();
-
+const fs = require('fs');
+const path = require('path');
 const app = require("./app");
 const pool = require("./db/db");
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
+
+const runSchema = async () => {
+  try {
+    const sql = fs.readFileSync(path.join(__dirname, '../schema.sql'), 'utf8');
+    await pool.query(sql);
+    console.log('✅ Schema verified — all tables ready');
+  } catch (err) {
+    console.error('⚠️ Schema warning:', err.message);
+  }
+};
 
 pool.connect()
-  .then((client) => {
+  .then(async (client) => {
     client.release();
     console.log("✅ PostgreSQL Connected");
+
+    await runSchema();
 
     const server = app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
